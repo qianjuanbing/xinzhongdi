@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>计算属性</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      输入金额：<input type="text" v-model="total" />
+      <h3>您一共消费了{{total}}元</h3>
+    </div>
+
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: { total: 0 },
+        computed: {
+          msg() {
+            return '您一共消费了' + this.total + '元'
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+      const source = new ol.source.Vector({
+        wrapX: false,
+      })
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer)
+
+      // 创建画笔对象
+      const draw = new ol.interaction.Draw({
+        source: source,
+        type: 'LineString',
+      })
+      map.addInteraction(draw)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const extent = [634883.45517486, 3423051.6221381, 643377, 3431937.8]
+      var center = ol.extent.getCenter(extent)
+      const tilelayer = new Zondy.Map.TileLayer('', 'testworld', {
+        ip: 'localhost',
+        port: 6163,
+      })
+      const gdbps = ['gdbp://MapGisLocal/GIS特训营/sfcls/city']
+      const vectorLayer = new Zondy.Map.GdbpLayer('', 'gdbps', {
+        ip: 'localhost',
+        port: 6163,
+        extent: extent,
+      })
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [vectorLayer],
+        view: new ol.View({
+          center: [114, 30],
+          projection: 'EPSG:4326',
+          zoom: 3,
+        }),
+      })
+    </script>
+  </body>
+</html>

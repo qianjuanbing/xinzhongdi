@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      // 创建画布
+      const source = new ol.source.Vector({
+        wrapX: false,
+      })
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer)
+
+      // 创建画笔对象
+      const draw = new ol.interaction.Draw({
+        source: source,
+        type: 'LineString',
+        maxPoints: 2, // 最多绘制两个点
+        geometryFunction: function (coordinates, geometry) {
+          if (!geometry) {
+            geometry = new ol.geom.Polygon(null)
+          }
+          var start = coordinates[0]
+          var end = coordinates[1]
+          geometry.setCoordinates([
+            [start, [start[0], end[1]], end, [end[0], start[1]], start],
+          ])
+          return geometry
+        },
+      })
+      map.addInteraction(draw) // 添加交互到地图
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <com> </com>
+      <com> </com>
+      <com> </com>
+    </div>
+
+    <div id="app2">
+      <com></com>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false
+      Vue.component('com', {
+        template: `<h3>我是一个组件{{msg}}</h3>`,
+        data() {
+          return {
+            msg: 'hello',
+          }
+        },
+      })
+      const vm = new Vue({
+        el: '#app',
+      })
+      const vm2 = new Vue({
+        el: '#app2',
+      })
+    </script>
+  </body>
+</html>

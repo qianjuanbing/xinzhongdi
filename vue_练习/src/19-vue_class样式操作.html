@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <span class="red">红色文字</span>
+      <span :class="obj">红色的文字</span>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          obj: {
+            red: true,
+            blue: true,
+          },
+          arr: ['red', 'blue'],
+        },
+      })
+    </script>
+  </body>
+</html>

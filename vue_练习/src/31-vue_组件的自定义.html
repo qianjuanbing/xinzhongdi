@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <son @send="handle"></son>
+    </div>
+
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          hello: '',
+        },
+        methods: {
+          handle(msg) {
+            console.log('子组件触发了自定义事件:abc')
+          },
+        },
+        components: {
+          son: {
+            template: '<button @click="send">点击</button>',
+            data() {
+              return {
+                s2f: '123',
+              }
+            },
+            methods: {
+              send() {
+                console.log('子组件点击事件')
+                this.$emit('send', this.s2f)
+              },
+            },
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

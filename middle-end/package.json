@@ -1,0 +1,28 @@
+{
+  "name": "middle-end",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.8.4",
+    "core-js": "^3.8.3",
+    "element-plus": "^2.6.3",
+    "vue-axios": "^3.5.2",
+    "vue-loader": "^17.4.1",
+    "vue-router": "^4.0.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "^5.0.8",
+    "vue": "3.4.21",
+    "vue-router": "4.2.5",
+    "vue-cli-plugin-element-plus": "^0.0.13",
+    "@vue/compiler-sfc": "3.4.21",
+    "webpack": "5.89.3"
+  }
+}

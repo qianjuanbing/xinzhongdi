@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      输入金额：<input type="text" v-model="money" />
+      <h3>{{getTotal()}}</h3>
+      <h3>{{getTotal()}}</h3>
+      <h3>{{getTotal()}}</h3>
+      <h3>{{getTotal()}}</h3>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          money: '0',
+        },
+        methods: {
+          getTotal() {
+            console.log('run into getTotal...')
+            return `您一共消费了${this.money}元`
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

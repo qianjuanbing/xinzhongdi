@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      // 单个点
+      // const point = new ol.geom.Point([114.4, 30.6])
+      // const pointFeature = new ol.Feature({
+      //   geometry: point,
+      // })
+
+      // 创建多个点坐标数组
+      const points = [
+        [114.4, 30.6], // 武汉
+        [121.4, 31.2], // 上海
+        [116.4, 39.9], // 北京
+      ].map((coord) => {
+        const feature = new ol.Feature({
+          geometry: new ol.geom.Point(coord),
+        })
+        feature.setStyle(
+          new ol.style.Style({
+            fill: new ol.style.Fill({
+              color: 'rgba(255,0,0,0.5)',
+            }),
+            // 边线颜色
+            stroke: new ol.style.Stroke({
+              color: '#ffcc33',
+              width: 2,
+            }),
+            // 形状
+            image: new ol.style.Circle({
+              radius: 5,
+              fill: new ol.style.Fill({
+                color: '#ffcc33',
+              }),
+            }),
+          })
+        )
+        return feature
+      })
+
+      // 创建数据源，将要素对象添加到数据源
+      const source = new ol.source.Vector({
+        features: points,
+      })
+      // 创建图层对象，将数据源添加到图层对象
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      // 将图层对象添加到地图
+      map.addLayer(layer)
+    </script>
+  </body>
+</html>

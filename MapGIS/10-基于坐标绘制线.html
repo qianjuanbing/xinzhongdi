@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      const line = new ol.geom.LineString([
+        [114, 30],
+        [121, 31],
+        [116, 39],
+      ])
+
+      // 创建线要素
+      const lineFeature = new ol.Feature({
+        geometry: line,
+      })
+      lineFeature.setStyle(yellowLine)
+      // 创建矢量数据源
+      const source = new ol.source.Vector({
+        features: [lineFeature],
+      })
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer)
+    </script>
+  </body>
+</html>

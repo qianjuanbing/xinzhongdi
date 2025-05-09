@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="todo in todos" @click="handleClick(todo.id,$event)">
+          {{todo.content}}
+        </li>
+      </ul>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          todos: [
+            { id: 1, content: '待办1' },
+            { id: 2, content: '待办2' },
+            { id: 3, content: '待办3' },
+          ],
+        },
+        methods: {
+          handleClick(id, event) {
+            console.log(id)
+            console.log(event)
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

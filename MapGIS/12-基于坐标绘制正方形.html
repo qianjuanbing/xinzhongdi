@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      // 创建圆几何
+      const circle = new ol.geom.Circle([114, 30], 10)
+
+      const square = new ol.geom.Polygon.fromCircle(circle, 4, Math.PI / 4)
+      const squareFeature = new ol.Feature({
+        geometry: square,
+      })
+      // 绘制矩形
+      const rectangle = new ol.Feature({
+        geometry: new ol.geom.Polygon.fromExtent([80, 0, 110, 20]),
+      })
+      // 绘制多边形
+      const polygon = new ol.Feature({
+        geometry: new ol.geom.Polygon([
+          [
+            [80, 20],
+            [85, 25],
+            [90, 25],
+            [90, 20],
+            [80, 20],
+          ], //第一个多边形
+          [
+            [120, 40],
+            [125, 45],
+            [130, 37],
+            [120, 40],
+          ], //第二个多边形
+        ]),
+      })
+      // 创建矢量数据源
+      const source = new ol.source.Vector({
+        features: [squareFeature, rectangle, polygon],
+        wrapX: false,
+      })
+      // 创建图层
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer) // 添加图层到地图
+
+      // map对象的事件
+      map.on('click', function (e) {
+        console.log(e)
+      })
+
+      const select = new ol.interaction.Select()
+      map.addInteraction(select) // 添加交互
+
+      // 编辑控件
+      const modify = new ol.interaction.Modify({
+        features: select.getFeatures(),
+      })
+      map.addInteraction(modify)
+    </script>
+  </body>
+</html>

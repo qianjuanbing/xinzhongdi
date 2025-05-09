@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      // 绘制圆
+      const circleFeature = new ol.Feature({
+        geometry: new ol.geom.Circle([114, 30], 10), // 以114,30为圆心，半径为10米
+      })
+      circleFeature.setStyle(yellowLine) // 使用之前定义的样式
+
+      // 创建矢量数据源
+      const source = new ol.source.Vector({
+        features: [circleFeature],
+      })
+      // 创建图层
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer) // 添加图层到地图
+    </script>
+  </body>
+</html>

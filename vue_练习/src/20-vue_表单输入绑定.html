@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model.lazy="text" />
+      <input type="text" type="datetime-local" v-model="text" />
+      <br />
+      <label><input type="radio" value="1" v-model.number="sex" />男</label>
+      <label><input type="radio" value="0" v-model.number="sex" />女</label>
+      <br />
+      <input type="checkbox" value="eat" v-model="checked" />吃饭
+      <input type="checkbox" value="sleep" v-model="checked" />睡觉
+      <input type="checkbox" value="doudou" v-model="checked" />打豆豆
+      <br />
+      <select v-model="city">
+        <option value="">请选择</option>
+        <option value="beijing">北京</option>
+        <option value="shanghai">上海</option>
+        <option value="wuhan">武汉</option>
+      </select>
+      <br />
+      <br />
+      <textarea v-model="rows"></textarea>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          text: '',
+          sex: '',
+          checked: [],
+          city: '',
+          rows: '',
+        },
+      })
+    </script>
+  </body>
+</html>

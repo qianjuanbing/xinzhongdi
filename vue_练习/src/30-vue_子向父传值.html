@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <son @send="handleSend"></son>
+    </div>
+
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        components: {
+          son: {
+            template: '<button @click="sendMsg">点我</button>',
+            methods: {
+              sendMsg() {
+                this.$emit('send', '子组件->父组件')
+              },
+            },
+          },
+        },
+        methods: {
+          handleSend(msg) {
+            alert('收到了组件的数据:' + msg)
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

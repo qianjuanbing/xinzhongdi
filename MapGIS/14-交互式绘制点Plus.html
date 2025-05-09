@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <button onclick="addPoint()">激活控件</button>
+    <button onclick="exit()">退出</button>
+    <button onclick="reset()">清除</button>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+      const source = new ol.source.Vector({
+        wrapX: false,
+      })
+      // 创建矢量图层
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer)
+
+      // 创建画笔对象
+      const draw = new ol.interaction.Draw({
+        source: source,
+        type: 'Point', // 绘制点
+      })
+      // 添加到map对象中
+      function addPoint() {
+        map.addInteraction(draw) // 添加交互到地图
+      }
+      function exit() {
+        map.removeInteraction(draw) // 退出
+      }
+      function reset() {
+        source.clear()
+      }
+      draw.on('drawend', function (e) {
+        console.log(e)
+        console.log('点绘制完成')
+      })
+    </script>
+  </body>
+</html>

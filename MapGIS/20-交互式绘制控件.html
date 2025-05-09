@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/interaction.js"></script>
+  </head>
+  <body>
+    <div id="menu">
+      <span>几何图形类型：</span>
+      <select id="type">
+        <option value="default">无</option>
+        <option value="Point">点</option>
+        <option value="LineString">线</option>
+        <option value="Polygon">多边形</option>
+        <option value="Circle">圆</option>
+        <option value="Square">正方形</option>
+        <option value="Box">矩形</option>
+      </select>
+    </div>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      const source = new ol.source.Vector({
+        wrapX: false,
+      })
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer)
+
+      let draw = null // 声明一个变量，用来存储画笔对象
+
+      const select = document.querySelector('#type')
+      select.addEventListener('change', function () {
+        console.log(this.value)
+        let type = this.value
+        source.clear()
+        if (draw) {
+          map.removeInteraction(draw) // 移除之前的画笔
+        }
+        draw = createDraw(source, type, function (e) {
+          console.log(e.feature.getGeometry().getCoordinates())
+        })
+        map.addInteraction(draw)
+      })
+    </script>
+  </body>
+</html>

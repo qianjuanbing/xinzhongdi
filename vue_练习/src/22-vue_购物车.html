@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>购物车</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    table {
+      width: 500px;
+      margin: 50px auto;
+      border: 1px solid;
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+    tr,
+    th,
+    td {
+      border: 1px solid;
+      background-color: rgb(239, 238, 238);
+    }
+    table caption {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    table th {
+      padding: 5px 0;
+      color: #6b6b6b;
+      background-color: #f6f6f6;
+    }
+    table td {
+      padding: 5px 0;
+      text-align: center;
+    }
+    tr td:first-of-type {
+      width: 40px;
+    }
+    .add,
+    .sub {
+      width: 20px;
+      height: 20px;
+    }
+    td.right {
+      text-align: right;
+    }
+    td.left {
+      text-align-last: left;
+    }
+    table tr.last-of-type td:last-child {
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <table>
+        <caption>
+          购物车
+        </caption>
+        <tr>
+          <th></th>
+          <th>书籍名称</th>
+          <th>出版日期</th>
+          <th>价格</th>
+          <th>购买数量</th>
+          <th>操作</th>
+        </tr>
+        <tr v-for="(cart,index) in carts">
+          <td>{{cart.id}}</td>
+          <td>{{cart.name}}</td>
+          <td>{{cart.publish_date}}</td>
+          <td>{{cart.price| parsePrice}}</td>
+          <td>
+            <button class="sub" @click="cart.number==1?1:cart.number--">
+              -</button
+            >{{cart.number}}
+            <button class="add" @click="cart.number+=1">+</button>
+          </td>
+          <td><button @click="removeById(cart.id)">移除</button></td>
+        </tr>
+        <tr>
+          <td class="right" colspan="6" v-if="carts.length !=0">{{msg}}</td>
+          <td class="left" colspan="6" v-else>购物车中没有商品</td>
+        </tr>
+      </table>
+    </div>
+
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          carts: [
+            {
+              id: 1,
+              name: '算法导论',
+              publish_date: '2006-09',
+              price: 85,
+              number: 1,
+            },
+            {
+              id: 2,
+              name: 'Unix编程艺术',
+              publish_date: '2006-02',
+              price: 59,
+              number: 1,
+            },
+            {
+              id: 3,
+              name: '编程珠玑',
+              publish_date: '2008-10',
+              price: 39,
+              number: 1,
+            },
+          ],
+        },
+        methods: {
+          removeByindex(index) {
+            this.carts.splice(index, 1)
+          },
+          removeById(id) {
+            const index = this.carts.findIndex((item) => item.id == id)
+            this.carts.splice(index, 1)
+          },
+        },
+
+        computed: {
+          total() {
+            return this.carts.reduce((pre, cur) => {
+              return pre + cur.price * cur.number
+            }, 0)
+          },
+          msg() {
+            return `总金额：￥${this.total.toFixed(2)}元`
+          },
+        },
+        filters: {
+          parsrPrice(value) {
+            return `￥${value.toFixed(2)}元`
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

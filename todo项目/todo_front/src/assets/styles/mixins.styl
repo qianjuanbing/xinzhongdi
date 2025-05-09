@@ -1,0 +1,26 @@
+clearDefault()
+  appearance: none
+  border: none
+  outline: none
+
+btn(color,border=false)
+  padding 0 10px
+  height 30px
+  border-radius: 5px
+  outline: none
+  border: none
+  cursor: pointer
+  if(border==true)
+    border: 1px solid color
+  else
+    background-color: color
+    color: #fff
+
+primaryBtn()
+  btn(rgb(252,157,154))
+
+primaryBorderBtn()
+  btn(rgb(252,157,154),true)
+
+infoBtn()
+  btn(rgb(131,175,155))

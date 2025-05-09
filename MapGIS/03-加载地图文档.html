@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      const tileLayer = new Zondy.Map.TileLayer('', 'testworld', {
+        ip: 'localhost',
+        port: 6163,
+      })
+      const doclayer = new Zondy.Map.Doc('', 'doc', {
+        ip: 'localhost',
+        port: 6163,
+      })
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [tileLayer, doclayer],
+        view: new ol.View({
+          center: [114, 30],
+          projection: 'EPSG:4326',
+          zoom: 3,
+        }),
+      })
+    </script>
+  </body>
+</html>

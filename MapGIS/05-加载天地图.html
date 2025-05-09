@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/TiandiTu.js"></script>
+  </head>
+  <body>
+    <div id="mapCon"></div>
+
+    <script>
+      // const TiandiMap_vec = new ol.layer.Tile({
+      //   title: '天地图矢量图层',
+      //   source: new ol.source.XYZ({
+      //     url:
+      //       'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=' +
+      //       '11dce887d8c343629fe8efcf0c60caec', //parent.TiandituKey()为天地图密钥,
+      //     wrapX: false, // 在横向不重复
+      //   }),
+      // })
+
+      // const TiandiMap_cva = new ol.layer.Tile({
+      //   title: '天地图矢量注记图层',
+      //   source: new ol.source.XYZ({
+      //     url:
+      //       'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=' +
+      //       '11dce887d8c343629fe8efcf0c60caec',
+      //     wrapX: false,
+      //   }),
+      // })
+
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [TiandiMap_vec, TiandiMap_cva, TiandiMap_img, TiandiMap_cia],
+        view: new ol.View({
+          center: [0, 0],
+          projection: 'EPSG:4326',
+          zoom: 2,
+        }),
+      })
+    </script>
+  </body>
+</html>

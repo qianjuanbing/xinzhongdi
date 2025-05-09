@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>父向子传值</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <son :f2s="hello"></son>
+    </div>
+
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          hello: '123',
+        },
+        components: {
+          son: {
+            template: '<h3>{{f2s}}</h3>',
+            props: ['f2s'],
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

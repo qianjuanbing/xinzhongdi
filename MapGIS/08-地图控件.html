@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/TiandiTu.js"></script>
+    <style>
+      #mapCon {
+        width: 100%;
+        height: 95%;
+        position: absolute;
+      }
+      #mapCon .ol-zoom .ol-zoom-out {
+        margin-top: 204px;
+      }
+      #mapCon .ol-zoomslider {
+        background-color: transparent;
+        top: 2.3em;
+      }
+      #mapCon .ol-touch .ol-zoom .ol-zoom-out {
+        margin-top: 212px;
+      }
+      #mapCon .ol-touch .ol-zoomslider {
+        top: 2.75em;
+      }
+      #mapCon .ol-zoom-in .ol.has-tooltip:hover[role='tooltip'],
+      #mapCon .ol-zoom-in .ol-has-tooltip:focus[role='tooltip'] {
+        top: 3px;
+      }
+      #mapCon .ol-zoom-out .ol-has-tooltip:hover[role='tooltip'],
+      #mapCon .ol-zoon-out .ol-has-out-tooltip:focus[role='tooltip'] {
+        top: 232px;
+      }
+      #mapCon .ol-zoom-extent {
+        top: 280px;
+      }
+      /* 3.2 鼠标显示经纬度 */
+      #mouse-position {
+        float: left;
+        position: absolute;
+        right: 20px;
+        bottom: 5px;
+        width: 200px;
+        height: 20px;
+        z-index: 2000;
+      }
+      .custom-mouse-position {
+        color: white;
+        font-size: 16px;
+        font-family: '微软雅黑';
+      }
+      /* 5.鹰眼控件 */
+      .ol-custom-overviewmap,
+      .ol-custom-overviewmap.ol-uncollapsible {
+        bottom: auto;
+        left: auto;
+        right: 0;
+        top: 0;
+      }
+
+      .ol-custom-overviewmap:not(.ol-collapsed) {
+        border: 1px solid black;
+      }
+      .ol-custom-overviewmap .ol-overviewmap-box {
+        border: none;
+        width: 300px;
+      }
+      .ol-custom-overviewmap .ol-overviewmap-box {
+        border: 2px solid red;
+      }
+      .ol-custom-overviewmap:not(.ol-collapsed) button {
+        bottom: auto;
+        left: auto;
+        right: 1px;
+        top: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapCon">
+      <div id="mouse-position"></div>
+    </div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [TiandiMap_vec, TiandiMap_cva, TiandiMap_img, TiandiMap_cia],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 5,
+        }),
+      })
+
+      // 创建控件
+      // 1.创建导航控件
+      const zoomToExtent = new ol.control.ZoomToExtent({
+        extent: [110, 34, 114.11, 35.2],
+      })
+      // 添加控件
+      map.addControl(zoomToExtent)
+
+      // 2.滑块控件
+      const zoomslider = new ol.control.ZoomSlider()
+      map.addControl(zoomslider)
+
+      // 3.鼠标显示经纬度
+      const mousePositionControl = new ol.control.MousePosition({
+        coordinateFormat: ol.coordinate.createStringXY(4), // 显示的格式
+        projection: 'EPSG:4326', // 坐标转换
+        className: 'custom-mouse-position', // 样式
+        target: document.getElementById('mouse-position'), // 显示的位置
+        undefinedHTML: '&nbsp;', // 未定义的HTML
+      })
+      map.addControl(mousePositionControl)
+
+      // 比例尺
+      const scaleLineControl = new ol.control.ScaleLine({
+        units: 'metric',
+      })
+      map.addControl(scaleLineControl)
+
+      // 5.鹰眼
+      const overviewMapControl = new ol.control.OverviewMap({
+        className: 'ol-overviewmap ol-custom-overviewmap',
+        layers: [TiandiMap_vec, TiandiMap_cva],
+        collapseLabel: '\u00BB', // 折叠按钮
+        label: '\u00AB', // 展开按钮
+        collapsed: false, // 默认不展开
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          maxZoom: 5,
+          minZoom: 1,
+        }),
+      })
+      map.addControl(overviewMapControl)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <com></com>
+    </div>
+
+    <template id="tmp">
+      <button @click="counter++">你点了我{{counter}}次</button>
+    </template>
+
+    <script>
+      const com = {
+        template: '#tmp',
+        data() {
+          return {
+            counter: 0,
+          }
+        },
+      }
+
+      const vm = new Vue({
+        el: '#app',
+        components: {
+          com,
+        },
+      })
+    </script>
+  </body>
+</html>

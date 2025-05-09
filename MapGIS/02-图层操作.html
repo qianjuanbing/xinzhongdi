@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+  </head>
+  <body>
+    <div id="mapCon">
+      <button onclick="addLayer()">添加图层</button>
+      <button onclick="removeLayer()">删除图层</button>
+    </div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [0, 0],
+          zoom: 1,
+        }),
+      })
+
+      const tileLayer = new Zondy.Map.TileLayer('', 'testworld', {
+        ip: 'localhost',
+        port: 6163,
+      })
+
+      function addLayer() {
+        map.addLayer(tileLayer)
+      }
+
+      function removeLayer() {
+        map.removeLayer(tileLayer)
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/TiandiTu.js"></script>
+    <style>
+      #mapCon {
+        position: relative;
+      }
+      .container {
+        position: absolute;
+        right: 0;
+        width: 200px;
+        height: 200px;
+        background-color: #b2b2b2;
+        border-radius: 5px;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapCon">
+      <ul class="container">
+        <h3>图层列表</h3>
+        <li>
+          <input type="checkbox" onclick="showVec(this.checked)" checked />
+          天地图矢量图层
+        </li>
+        <li>
+          <input type="checkbox" onclick="showCva(this.checked)" checked />
+          天地图矢量注记
+        </li>
+        <li>
+          <input type="checkbox" onclick="showImg(this.checked)" checked />
+          天地图影像图层
+        </li>
+        <li>
+          <input type="checkbox" onclick="showCia(this.checked)" checked />
+          天地图影像注记
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [TiandiMap_vec, TiandiMap_cva, TiandiMap_img, TiandiMap_cia],
+        view: new ol.View({
+          center: [0, 0],
+          projection: 'EPSG:4326',
+          zoom: 4,
+        }),
+      })
+
+      // 通用图层控制函数
+      function showLayer(checked, currentLayer) {
+        currentLayer.setVisible(checked)
+      }
+
+      // 修改后的具体控制函数
+      function showVec(checked) {
+        showLayer(checked, TiandiMap_vec)
+      }
+      function showCva(checked) {
+        showLayer(checked, TiandiMap_cva)
+      }
+      function showImg(checked) {
+        showLayer(checked, TiandiMap_img)
+      }
+      function showCia(checked) {
+        showLayer(checked, TiandiMap_cia)
+      }
+    </script>
+  </body>
+</html>

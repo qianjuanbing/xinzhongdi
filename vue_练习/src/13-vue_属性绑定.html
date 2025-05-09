@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <a :href="url+'/index.html'">baidu</a>
+      <input type="text" :value="test" @input="onInput" />
+    </div>
+
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          url: 'http://www.baidu.com',
+          test: '',
+        },
+        methods: {
+          handleInput(event) {
+            console.log(this.$refs)
+            this.test = this.$refs['abc'].value
+          },
+          onInput(event) {
+            console.log(event.target)
+            this.test = event.target.value
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

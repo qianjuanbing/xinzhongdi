@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/TiandiTu.js"></script>
+    <script src="./js/vue.js"></script>
+    <style>
+      #mapCon {
+        position: relative;
+      }
+      .layers {
+        position: absolute;
+        right: 0;
+        width: 260px;
+        height: 200px;
+        background-color: rgba(178, 178, 178, 0.6);
+        border-radius: 5px;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapCon">
+      <div class="layers">
+        <h3>图层列表</h3>
+        <ul id="layer-list">
+          <li v-for="item in layers">
+            <input
+              type="checkbox"
+              :checked="item.get('visible')"
+              @change="onChange(item)"
+            />{{item.get('title')}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [TiandiMap_vec, TiandiMap_cva, TiandiMap_img, TiandiMap_cia],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [0, 0],
+          zoom: 5,
+        }),
+      })
+
+      Vue.prototype.$map = map
+      const vm = new Vue({
+        el: '#layer-list',
+        data: {
+          layers: [],
+        },
+        created() {
+          this.$map.getLayers().forEach((item) => {
+            this.layers.push(item)
+          })
+        },
+        methods: {
+          onChange(item) {
+            item.setVisible(!item.get('visible'))
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
