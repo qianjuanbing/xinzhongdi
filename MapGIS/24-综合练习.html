@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/include-openlayers-local.js"></script>
+    <script src="./js/Gaode.js"></script>
+    <script src="./js/styles.js"></script>
+  </head>
+  <body>
+    <button onclick="activeLabel()">激活</button>
+    <button onclick="exit()">退出</button>
+    <div id="mapCon"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'mapCon',
+        layers: [gaode],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [114, 30],
+          zoom: 4,
+        }),
+      })
+
+      const source = new ol.source.Vector({
+        wrapX: false,
+      })
+      const layer = new ol.layer.Vector({
+        source: source,
+      })
+      map.addLayer(layer)
+
+      function handleLabel(e) {
+        console.log(e)
+
+        const point = new ol.Feature({
+          geometry: new ol.geom.Point(e.coordinate),
+        })
+        point.setStyle(label)
+
+        const source = e.map.getLayers().item(1).getSource()
+        source.addFeature(point)
+      }
+      function activeLabel() {
+        map.on('click', handleLabel)
+      }
+      function exit() {
+        map.un('click', handleLabel)
+      }
+    </script>
+  </body>
+</html>
